@@ -205,7 +205,7 @@ export default function Home() {
         {/* ═══ HERO ═══ */}
         <section className="hero">
           <div className="hero-media" aria-hidden="true">
-            <video autoPlay muted loop playsInline preload="metadata" poster="/gallery/bc440e23-1ff3-4169-af77-40c874848a1b.jpg">
+            <video autoPlay muted loop playsInline preload="metadata">
               <source src="/video/hero-new-video.mp4" type="video/mp4" />
             </video>
             <div className="scanline" />
@@ -266,7 +266,9 @@ export default function Home() {
           <div className="services-grid">
             {SERVICES.map(s => (
               <article className="service-card reveal" key={s.num}>
-                <img src={s.img} alt={s.title} loading="lazy" />
+                <div className="svc-art m-art" style={{ '--h': String((parseInt(s.num)-1)*60) } as React.CSSProperties}>
+                  <div className="m-ring"/><div className="m-ring m-r2"/><div className="m-ring m-r3"/><div className="m-orb"/>
+                </div>
                 <div>
                   <span className="svc-num">{s.num}</span>
                   <h3>{s.title}</h3>
@@ -285,9 +287,11 @@ export default function Home() {
             <h2>Every format, every scale, every time.</h2>
           </div>
           <div className="verticals-grid">
-            {VERTICALS.map(v => (
+            {VERTICALS.map((v, vi) => (
               <a className="vertical-card reveal" href="#contact" key={v.label}>
-                <img src={v.img} alt={v.label} loading="lazy" />
+                <div className="v-art m-art" style={{ '--h': String(vi*55) } as React.CSSProperties}>
+                  <div className="m-ring"/><div className="m-ring m-r2"/><div className="m-orb"/>
+                </div>
                 <div className="vertical-label">{v.label}</div>
               </a>
             ))}
@@ -303,7 +307,9 @@ export default function Home() {
           <div className="project-grid">
             {PROJECTS.map((p, i) => (
               <article className={`project-card reveal${i === 0 ? ' large' : ''}`} key={p.title}>
-                <img src={p.img} alt={p.title} loading="lazy" />
+                <div className="p-art m-art" style={{ '--h': String(i*120) } as React.CSSProperties}>
+                  <div className="m-ring"/><div className="m-ring m-r2"/><div className="m-ring m-r3"/><div className="m-orb"/>
+                </div>
                 <div>
                   <span>{p.tag}</span>
                   <h3>{p.title}</h3>
@@ -333,7 +339,9 @@ export default function Home() {
                     aria-label={`View ${g.caption}`}
                     onKeyDown={e => e.key === 'Enter' && setLightbox(i)}
                   >
-                    <img src={g.img} alt={g.caption} loading="lazy" />
+                    <div className="g-art m-art" style={{ '--h': String(i*26) } as React.CSSProperties}>
+                    <div className="m-ring"/><div className="m-ring m-r2"/><div className="m-ring m-r3"/><div className="m-orb"/>
+                  </div>
                     <figcaption><span>{g.num}</span>{g.caption}</figcaption>
                   </figure>
                 ))}
@@ -396,7 +404,10 @@ export default function Home() {
         {/* ═══ ABOUT ═══ */}
         <section className="section about-section" id="about">
           <div className="about-image reveal">
-            <img src="https://images.unsplash.com/photo-1505236858219-8359eb29e329?auto=format&fit=crop&w=1200&q=80" alt="Event production" loading="lazy" />
+            <div className="ab-art m-art" style={{ '--h': '180' } as React.CSSProperties}>
+              <div className="m-grid"/><div className="m-ring"/><div className="m-ring m-r2"/><div className="m-ring m-r3"/><div className="m-orb"/>
+              <div className="m-particles">{Array.from({length:6},(_,j)=><span key={j}/>)}</div>
+            </div>
           </div>
           <div className="about-copy reveal">
             <p className="eyebrow">About AV-TEC</p>
@@ -574,7 +585,10 @@ export default function Home() {
           <button className="lb-arrow lb-prev" onClick={e => { e.stopPropagation(); goLb(-1); }} aria-label="Previous">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m15 18-6-6 6-6" /></svg>
           </button>
-          <img src={GALLERY[lightbox].img} alt={GALLERY[lightbox].caption} onClick={e => e.stopPropagation()} />
+          <div className="lb-art m-art" style={{ '--h': String(lightbox*26) } as React.CSSProperties} onClick={e => e.stopPropagation()}>
+            <div className="m-ring"/><div className="m-ring m-r2"/><div className="m-ring m-r3"/><div className="m-orb"/>
+            <p className="lb-caption">{GALLERY[lightbox].caption}</p>
+          </div>
           <button className="lb-arrow lb-next" onClick={e => { e.stopPropagation(); goLb(1); }} aria-label="Next">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m9 18 6-6-6-6" /></svg>
           </button>
