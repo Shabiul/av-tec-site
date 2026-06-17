@@ -111,6 +111,15 @@ const TC3 = [
   { i: 'VM', name: 'Venue Manager', role: 'Convention Center', q: 'They left the room clean, tested, and ready well before rehearsal time.' },
 ];
 
+const FAQ = [
+  { q: 'How far in advance should I book?', a: 'For large events (concerts, conferences, exhibitions), 4–8 weeks notice is ideal. For smaller setups, 1–2 weeks usually works. Same-day emergency support is available for select clients.' },
+  { q: 'Do you handle outdoor events?', a: 'Yes. We have weatherproof equipment, generator support, and outdoor-rated speaker systems for festivals, concerts, and government programs held in open spaces.' },
+  { q: 'What cities do you cover?', a: 'Our base is Bengaluru, but we operate pan-India — Mumbai, Delhi, Chennai, Hyderabad, Pune, Kochi, and more. Contact us with your event location.' },
+  { q: 'Can you handle sound and lighting together?', a: 'Yes. Most clients book a full technical package — sound, lighting, LED walls, and stage management — under a single crew and coordinator for seamless execution.' },
+  { q: 'Is equipment rental available without crew?', a: 'Selected equipment is available for dry hire. For large or complex setups, we recommend including our technical crew for safe rigging, proper tuning, and show-day support.' },
+  { q: 'How is pricing structured?', a: 'Pricing is based on equipment needed, crew size, duration, and site logistics. Share your event details — venue, audience size, date — and we\'ll send a detailed quote.' },
+];
+
 function MetricCounter({ target, suffix }: { target: number; suffix: string }) {
   const [count, setCount] = useState(0);
   const ref = useRef<HTMLElement>(null);
@@ -144,6 +153,7 @@ export default function Home() {
   const [chatOpen, setChatOpen] = useState(false);
   const [chatMsgs, setChatMsgs] = useState<{ from: 'bot' | 'user'; text: string }[]>([{ from: 'bot', text: 'Share your event date, city, audience size, and what you need. Our team will help shape the setup.' }]);
   const [chatInput, setChatInput] = useState('');
+  const [faqOpen, setFaqOpen] = useState<number | null>(null);
   const headerRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -273,9 +283,7 @@ export default function Home() {
           <div className="services-grid">
             {SERVICES.map(s => (
               <article className="service-card reveal" key={s.num}>
-                <div className="svc-art m-art" style={{ '--h': String((parseInt(s.num)-1)*60) } as React.CSSProperties}>
-                  <div className="m-ring"/><div className="m-ring m-r2"/><div className="m-ring m-r3"/><div className="m-orb"/>
-                </div>
+                <img src={s.img} alt={s.title} loading="lazy" />
                 <div>
                   <span className="svc-num">{s.num}</span>
                   <h3>{s.title}</h3>
@@ -294,11 +302,9 @@ export default function Home() {
             <h2>Every format, every scale, every time.</h2>
           </div>
           <div className="verticals-grid">
-            {VERTICALS.map((v, vi) => (
+            {VERTICALS.map((v) => (
               <a className="vertical-card reveal" href="#contact" key={v.label}>
-                <div className="v-art m-art" style={{ '--h': String(vi*55) } as React.CSSProperties}>
-                  <div className="m-ring"/><div className="m-ring m-r2"/><div className="m-orb"/>
-                </div>
+                <img src={v.img} alt={v.label} loading="lazy" />
                 <div className="vertical-label">{v.label}</div>
               </a>
             ))}
@@ -314,9 +320,7 @@ export default function Home() {
           <div className="project-grid">
             {PROJECTS.map((p, i) => (
               <article className={`project-card reveal${i === 0 ? ' large' : ''}`} key={p.title}>
-                <div className="p-art m-art" style={{ '--h': String(i*120) } as React.CSSProperties}>
-                  <div className="m-ring"/><div className="m-ring m-r2"/><div className="m-ring m-r3"/><div className="m-orb"/>
-                </div>
+                <img src={p.img} alt={p.title} loading="lazy" />
                 <div>
                   <span>{p.tag}</span>
                   <h3>{p.title}</h3>
@@ -346,9 +350,7 @@ export default function Home() {
                     aria-label={`View ${g.caption}`}
                     onKeyDown={e => e.key === 'Enter' && setLightbox(i)}
                   >
-                    <div className="g-art m-art" style={{ '--h': String(i*26) } as React.CSSProperties}>
-                    <div className="m-ring"/><div className="m-ring m-r2"/><div className="m-ring m-r3"/><div className="m-orb"/>
-                  </div>
+                    <img src={g.img} alt={g.caption} loading="lazy" />
                     <figcaption><span>{g.num}</span>{g.caption}</figcaption>
                   </figure>
                 ))}
@@ -362,6 +364,29 @@ export default function Home() {
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m9 18 6-6-6-6" /></svg>
               </button>
             </div>
+          </div>
+        </section>
+
+        {/* ═══ PHOTO GRID ═══ */}
+        <section className="section photo-grid-section" id="photos">
+          <div className="section-heading reveal">
+            <p className="eyebrow">Event Portfolio</p>
+            <h2>Real setups. Real events. Every time on point.</h2>
+          </div>
+          <div className="photo-grid">
+            {GALLERY.map((g, i) => (
+              <div
+                key={g.num}
+                className={`pg-item reveal${i === 0 || i === 7 ? ' pg-wide' : ''}${i === 3 || i === 10 ? ' pg-tall' : ''}`}
+                style={{ backgroundImage: `url(${g.img})` }}
+                onClick={() => setLightbox(i)}
+                role="button" tabIndex={0}
+                aria-label={`View ${g.caption}`}
+                onKeyDown={e => e.key === 'Enter' && setLightbox(i)}
+              >
+                <div className="pg-overlay"><span>{g.caption}</span></div>
+              </div>
+            ))}
           </div>
         </section>
 
@@ -470,6 +495,25 @@ export default function Home() {
           <div className="logo-cloud reveal">
             {['Aurora Hotels', 'Nexus Events', 'Summit Corp', 'Metro Convention', 'EduSphere', 'Govt. Programs'].map(c => (
               <span key={c}>{c}</span>
+            ))}
+          </div>
+        </section>
+
+        {/* ═══ FAQ ═══ */}
+        <section className="section faq-section">
+          <div className="section-heading reveal">
+            <p className="eyebrow">FAQ</p>
+            <h2>Common questions, straight answers.</h2>
+          </div>
+          <div className="faq-list reveal">
+            {FAQ.map((f, i) => (
+              <div key={i} className={`faq-item${faqOpen === i ? ' is-open' : ''}`} onClick={() => setFaqOpen(faqOpen === i ? null : i)}>
+                <div className="faq-q">
+                  <span>{f.q}</span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18"><path d="m6 9 6 6 6-6"/></svg>
+                </div>
+                <div className="faq-a"><p>{f.a}</p></div>
+              </div>
             ))}
           </div>
         </section>
@@ -592,10 +636,7 @@ export default function Home() {
           <button className="lb-arrow lb-prev" onClick={e => { e.stopPropagation(); goLb(-1); }} aria-label="Previous">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m15 18-6-6 6-6" /></svg>
           </button>
-          <div className="lb-art m-art" style={{ '--h': String(lightbox*26) } as React.CSSProperties} onClick={e => e.stopPropagation()}>
-            <div className="m-ring"/><div className="m-ring m-r2"/><div className="m-ring m-r3"/><div className="m-orb"/>
-            <p className="lb-caption">{GALLERY[lightbox].caption}</p>
-          </div>
+          <img src={GALLERY[lightbox].img} alt={GALLERY[lightbox].caption} onClick={e => e.stopPropagation()} />
           <button className="lb-arrow lb-next" onClick={e => { e.stopPropagation(); goLb(1); }} aria-label="Next">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m9 18 6-6-6-6" /></svg>
           </button>
