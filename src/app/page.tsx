@@ -230,9 +230,16 @@ export default function Home() {
 
         {/* ═══ TRUST STRIP ═══ */}
         <div className="trust-strip" aria-label="Event types">
-          {['Corporate Events','Concerts','Weddings','DJ Booths','Pubs & Clubs','Government Events','Conferences','Exhibitions','Festivals','Institutions'].map(s => (
-            <span key={s}>{s}</span>
-          ))}
+          <div className="trust-track" aria-hidden="false">
+            {['Corporate Events','Concerts','Weddings','DJ Booths','Pubs & Clubs','Government Events','Conferences','Exhibitions','Festivals','Institutions'].map(s => (
+              <span key={s}>{s}</span>
+            ))}
+          </div>
+          <div className="trust-track" aria-hidden="true">
+            {['Corporate Events','Concerts','Weddings','DJ Booths','Pubs & Clubs','Government Events','Conferences','Exhibitions','Festivals','Institutions'].map(s => (
+              <span key={s + '-2'}>{s}</span>
+            ))}
+          </div>
         </div>
 
         {/* ═══ WHY AV-TEC ═══ */}
