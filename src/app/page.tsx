@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 /* ── Social icon SVG paths ── */
 const SOCIAL = {
@@ -64,33 +64,13 @@ const NAV_LINKS = [
 
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [heroIndex, setHeroIndex] = useState(0);
   const [testimIndex, setTestimIndex] = useState(0);
   const [lightbox, setLightbox] = useState<number | null>(null);
   const headerRef = useRef<HTMLElement>(null);
-  const heroTimer = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const openLightbox = (i: number) => setLightbox(i);
   const closeLightbox = () => setLightbox(null);
   const goLightbox = (dir: number) => setLightbox(i => i !== null ? (i + dir + GALLERY_IMAGES.length) % GALLERY_IMAGES.length : null);
-
-  /* ── Hero auto-rotate ── */
-  const startHeroTimer = useCallback(() => {
-    heroTimer.current = setInterval(() => {
-      setHeroIndex(i => (i + 1) % HERO_SLIDES.length);
-    }, 5000);
-  }, []);
-
-  useEffect(() => {
-    startHeroTimer();
-    return () => { if (heroTimer.current) clearInterval(heroTimer.current); };
-  }, [startHeroTimer]);
-
-  const goHero = (dir: number) => {
-    if (heroTimer.current) clearInterval(heroTimer.current);
-    setHeroIndex(i => (i + dir + HERO_SLIDES.length) % HERO_SLIDES.length);
-    startHeroTimer();
-  };
 
   /* ── Testimonial auto-rotate ── */
   useEffect(() => {
@@ -143,36 +123,21 @@ export default function Home() {
       </header>
 
       <main id="main">
-        {/* ═══ HERO SLIDER ═══ */}
-        <section className="hero-slider" aria-label="Hero slideshow">
-          <div className="hero-slides" style={{ transform: `translateX(-${heroIndex * 100}%)` }}>
-            {HERO_SLIDES.map((s, i) => (
-              <div className="hero-slide" key={i}>
-                {s.type === 'video' ? (
-                  <video autoPlay muted loop playsInline preload="auto" poster={s.poster}><source src={s.src} type="video/mp4" /></video>
-                ) : (
-                  <img src={s.src} alt={s.heading} loading={i === 0 ? 'eager' : 'lazy'} />
-                )}
-                <div className="hero-slide-content">
-                  <h2>{s.heading}</h2>
-                  <p>{s.sub}</p>
-                  <a className="hero-explore" href="#services">Explore More <span>›</span></a>
-                </div>
-              </div>
-            ))}
-          </div>
-          <button className="hero-arrow prev" type="button" aria-label="Previous slide" onClick={() => goHero(-1)}>
-            <svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6" /></svg>
-          </button>
-          <button className="hero-arrow next" type="button" aria-label="Next slide" onClick={() => goHero(1)}>
-            <svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6" /></svg>
-          </button>
-          <div className="hero-dots">
-            {HERO_SLIDES.map((_, i) => (
-              <button key={i} className={`hero-dot ${i === heroIndex ? 'active' : ''}`} type="button" aria-label={`Slide ${i + 1}`} onClick={() => { if (heroTimer.current) clearInterval(heroTimer.current); setHeroIndex(i); startHeroTimer(); }} />
-            ))}
-          </div>
-        </section>
+        {/* ═══ HERO SECTIONS (stacked vertically) ═══ */}
+        {HERO_SLIDES.map((s, i) => (
+          <section className="hero-block" key={i}>
+            {s.type === 'video' ? (
+              <video autoPlay muted loop playsInline preload="auto" poster={s.poster}><source src={s.src} type="video/mp4" /></video>
+            ) : (
+              <img src={s.src} alt={s.heading} loading={i === 0 ? 'eager' : 'lazy'} />
+            )}
+            <div className="hero-slide-content">
+              <h2>{s.heading}</h2>
+              <p>{s.sub}</p>
+              <a className="hero-explore" href="#services">Explore More <span>›</span></a>
+            </div>
+          </section>
+        ))}
 
         {/* ═══ ABOUT PANEL ═══ */}
         <section className="section about-panel" id="about">
