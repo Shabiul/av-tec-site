@@ -17,9 +17,9 @@ const SocialIcon = ({ name }: { name: keyof typeof SOCIAL }) => (
 /* ── Data ── */
 const HERO_SLIDES = [
   { type: 'video' as const, src: '/video/hero-video.mp4', poster: '/gallery/bc440e23-1ff3-4169-af77-40c874848a1b.jpg', heading: 'Experience Sound Like Never Before', sub: 'Bringing exceptional audio visual experiences since 1992' },
-  { type: 'image' as const, src: '/gallery/bc440e23-1ff3-4169-af77-40c874848a1b.jpg', heading: 'Professional Event Production', sub: 'Corporate events, conferences, concerts, and exhibitions across India' },
-  { type: 'image' as const, src: '/gallery/7894e275-c490-404a-b279-a4366824bd16.jpg', heading: 'Premium AV Technology', sub: 'LED walls, sound systems, stage lighting, and technical crew' },
-  { type: 'image' as const, src: '/gallery/19b57f7c-e740-4d10-80f1-7e226abafcfd.jpg', heading: 'Trusted Technical Partners', sub: 'Over 30 years of reliable event technology support' },
+  { type: 'video' as const, src: '/video/sequence-04-1.mp4', poster: '/gallery/bc440e23-1ff3-4169-af77-40c874848a1b.jpg', heading: 'Professional Event Production', sub: 'Corporate events, conferences, concerts, and exhibitions across India' },
+  { type: 'video' as const, src: '/video/sequence-04-9.mp4', poster: '/gallery/7894e275-c490-404a-b279-a4366824bd16.jpg', heading: 'Premium AV Technology', sub: 'LED walls, sound systems, stage lighting, and technical crew' },
+  { type: 'video' as const, src: '/video/sequence-04-7.mp4', poster: '/gallery/19b57f7c-e740-4d10-80f1-7e226abafcfd.jpg', heading: 'Trusted Technical Partners', sub: 'Over 30 years of reliable event technology support' },
 ];
 
 const TESTIMONIALS = [
@@ -31,7 +31,7 @@ const TESTIMONIALS = [
 
 const NEWS = [
   { img: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=900&q=80', label: 'AV-TEC', title: "AV-TEC & New D&B GSL System Rock Major Festival", desc: 'We were proud to provide sound and lighting for one of India\'s largest music festivals, featuring the new D&B audiotechnik GSL system for exceptional clarity and coverage.' },
-  { img: 'https://images.unsplash.com/photo-1478720568477-152d9b164e63?auto=format&fit=crop&w=900&q=80', label: 'AV-TEC', title: "World's First: AV-TEC Gets New D&B SL Series", desc: "We're the first company in the world to receive the revolutionary SL Series from D&B audiotechnik, after 5 years of development." },
+  { img: '/gallery/image.png', label: 'AV-TEC', title: "World's First: AV-TEC Gets New D&B SL Series", desc: "We're the first company in the world to receive the revolutionary SL Series from D&B audiotechnik, after 5 years of development." },
   { img: 'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&w=900&q=80', label: 'AV-TEC', title: "Our New 20' x 60' LED Wall Steals the Show", desc: 'Our brand new massive LED wall was the star of a recent high-profile product launch, delivering larger-than-life visuals.' },
 ];
 
